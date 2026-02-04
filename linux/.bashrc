@@ -431,6 +431,7 @@ done
 
 # PPT Generator CLI
 export PATH="$HOME/.local/bin:$PATH"
-if [ "$TERM_PROGRAM" != "vscode" ]; then
+
+if [ "$PWD" == "$HOME" ]; then
     cd ~/dev/
 fi
