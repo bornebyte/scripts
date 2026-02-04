@@ -1,0 +1,39 @@
+[Unit]
+Description=Reverse SSH Tunnel for Remote Access
+After=network-online.target ssh.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Path to the main script
+ExecStart=/usr/local/bin/reverse-ssh-tunnel.sh /etc/reverse-ssh/config.conf
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security and resource limits
+# Note: These are relaxed for full system access
+PrivateTmp=no
+NoNewPrivileges=no
+ProtectSystem=no
+ProtectHome=no
+
+# Standard output and error handling
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=reverse-ssh-tunnel
+
+# Environment
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Kill mode
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
