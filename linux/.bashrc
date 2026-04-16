@@ -218,7 +218,9 @@ alias l='ls -CF --color=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-
+alias desk='cd ~/Desktop/'
+alias down='cd ~/Downloads/'
+alias pyenv='source /home/shubham/dev/ml/.venv/bin/activate'
 # System Shortcuts
 alias untar='tar -xvf'
 alias ports='sudo lsof -i -P -n'
@@ -411,14 +413,14 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-# Auto refrest GPG agnet
+# Auto refresh GPG agent
 
 # Refresh GPG agent on every prompt
 gpg-connect-agent reloadagent /bye >/dev/null 2>&1
 
 # Start SSH agent if not running
 if ! pgrep -u "$USER" ssh-agent >/dev/null; then
-  evel "$(ssh-agent -s)" >/dev/null
+  eval "$(ssh-agent -s)" >/dev/null
 fi
 
 # Add SSH keys automatically
@@ -433,5 +435,19 @@ done
 export PATH="$HOME/.local/bin:$PATH"
 
 if [ "$PWD" == "$HOME" ]; then
-    cd ~/dev/
+  cd ~/dev/
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/shubham/dev/google-cloud-sdk/path.bash.inc' ]; then . '/home/shubham/dev/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/shubham/dev/google-cloud-sdk/completion.bash.inc' ]; then . '/home/shubham/dev/google-cloud-sdk/completion.bash.inc'; fi
+
+# pnpm
+export PNPM_HOME="/home/shubham/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
